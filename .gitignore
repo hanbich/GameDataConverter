@@ -32,3 +32,4 @@
 *.app
 /GameDataConverter/GameData.9d704290
 /GameDataConverter/x64
+/GameDataConverter/.vs
