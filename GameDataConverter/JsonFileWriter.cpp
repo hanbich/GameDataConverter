@@ -7,6 +7,9 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/prettywriter.h"
 
+#include "Type.h"
+#include "ConfigJsonParser.h"
+
 #include "JsonFileWriter.h"
 
 using namespace rapidjson;
@@ -47,6 +50,45 @@ namespace GDC
             ofs << buffer.GetString();
 
             ofs << endl;
+
+            return 0;
+        }
+        catch (std::exception& e) {
+            // 예외 처리
+            std::cerr << "Error: " << e.what() << std::endl;
+            return -1;
+        }
+    }
+
+    int JsonFileWriter::WriteFile()
+    {
+        try {
+
+            // 1. Parse a JSON string into DOM.
+            const char* json = "{\"project\":\"rapidjson\",\"stars\":10}";
+            Document d;
+            d.Parse(json);
+
+            // 2. Modify it by DOM.
+            Value& s = d["stars"];
+            s.SetInt(s.GetInt() + 1);
+
+            // 3. Stringify the DOM
+            StringBuffer buffer;
+            Writer<StringBuffer> writer(buffer);
+            d.Accept(writer);
+
+            // 파일에 JSON 문자열 쓰기
+            string path = ConfigJsonParser::Get()->GetWritePath();
+            path += "new_example.json";
+
+            ofstream ofs(path);
+            ofs << buffer.GetString();
+
+            ofs << endl;
+
+            // Output {"project":"rapidjson","stars":11}
+            std::cout << buffer.GetString() << std::endl;
 
             return 0;
         }

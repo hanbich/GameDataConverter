@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -136,15 +136,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandCoordinator.cpp" />
+    <ClCompile Include="ConfigJsonParser.cpp" />
     <ClCompile Include="ExcelFileLoader.cpp" />
     <ClCompile Include="GameDataConverter.cpp" />
     <ClCompile Include="JsonFileWriter.cpp" />
     <ClCompile Include="SourceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandCoordinator.h" />
+    <ClInclude Include="ConfigJsonParser.h" />
     <ClInclude Include="ExcelFileLoader.h" />
     <ClInclude Include="JsonFileWriter.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SourceGenerator.h" />
+    <ClInclude Include="Type.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

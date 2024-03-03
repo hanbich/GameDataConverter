@@ -17,6 +17,7 @@ namespace GDC
         ~JsonFileWriter() {}
 
         int LoadFile();
+        int WriteFile();
     };
 } // namespace GDC
 

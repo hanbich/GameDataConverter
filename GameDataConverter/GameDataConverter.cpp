@@ -6,17 +6,22 @@
 
 #include <iostream>
 
+#include "Type.h"
 #include "ExcelFileLoader.h"
 #include "JsonFileWriter.h"
+#include "ConfigJsonParser.h"
+
+using namespace GDC;
 
 int main()
 {
+    ConfigJsonParser::Get()->LoadFile("config.json");
 
-    GDC::ExcelFileLoader excelFileLoader;
-    GDC::JsonFileWriter jsonFileWriter;
+    ExcelFileLoader excelFileLoader;
+    JsonFileWriter jsonFileWriter;
 
     excelFileLoader.LoadFile();
-    jsonFileWriter.LoadFile();
+    jsonFileWriter.WriteFile();
 
     return 0;
 }
