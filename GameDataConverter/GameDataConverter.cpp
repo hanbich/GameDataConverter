@@ -23,6 +23,8 @@ int main()
     excelFileLoader.LoadFile();
     jsonFileWriter.WriteFile();
 
+    ConfigJsonParser::Delete();
+
     return 0;
 }
 
