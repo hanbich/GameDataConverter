@@ -5,8 +5,8 @@
 //! @brief  
 //!         
 
-#ifndef __GDC_COMMAND_DOORDINATOR_H__
-#define __GDC_COMMAND_DOORDINATOR_H__
+#ifndef __GDC_COMMAND_COORDINATOR_H__
+#define __GDC_COMMAND_COORDINATOR_H__
 
 namespace GDC
 {
@@ -73,4 +73,4 @@ namespace GDC
 	};
 } // namespace GDC
 
-#endif // __GDC_COMMAND_DOORDINATOR_H__
+#endif // __GDC_COMMAND_COORDINATOR_H__

@@ -47,8 +47,7 @@ namespace GDC
             return 0;
         }
         catch (std::exception& e) {
-            // 예외 처리
-            std::cerr << "Error: " << e.what() << std::endl;
+            //std::cerr << "Error: " << e.what() << std::endl;
             _LA1_ASSERT(e.what());
             return -1;
         }

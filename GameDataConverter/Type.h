@@ -14,20 +14,21 @@
 
 #include "Singleton.h"
 
-typedef char	int8;
-typedef short	int16;
-typedef __int32	int32;
-typedef __int64	int64;
+typedef char	i8;
+typedef short	i16;
+typedef __int32	i32;
+typedef __int64	i64;
 
-typedef unsigned char		uint8;
-typedef unsigned short		uint16;
-typedef unsigned __int32	uint32;
-typedef unsigned __int64	uint64;
+typedef unsigned char		ui8;
+typedef unsigned short		ui16;
+typedef unsigned __int32	ui32;
+typedef unsigned __int64	ui64;
 
-typedef std::string		tstring;
+typedef std::string			tstring;
 
-typedef std::vector<int32> Int32Vec;
-typedef std::vector<int8>  Int8Vec;
+typedef std::vector<i32> I32Vec;
+typedef std::vector<i8>  I8Vec;
+typedef std::vector<tstring> tstrVec;
 
 using namespace GDC;
 

@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="CommandCoordinator.cpp" />
     <ClCompile Include="ConfigJsonParser.cpp" />
+    <ClCompile Include="DataCoordinator.cpp" />
     <ClCompile Include="ExcelFileLoader.cpp" />
     <ClCompile Include="GameDataConverter.cpp" />
     <ClCompile Include="JsonFileWriter.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="CommandCoordinator.h" />
     <ClInclude Include="ConfigJsonParser.h" />
+    <ClInclude Include="DataCoordinator.h" />
     <ClInclude Include="ExcelFileLoader.h" />
     <ClInclude Include="JsonFileWriter.h" />
     <ClInclude Include="Singleton.h" />

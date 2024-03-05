@@ -13,10 +13,11 @@ namespace GDC
     class ExcelFileLoader
     {
     public:
-        ExcelFileLoader() {}
-        ~ExcelFileLoader() {}
+        ExcelFileLoader() = default;
+        ~ExcelFileLoader() = default;
 
-        int LoadFile();
+        static int LoadFile();
+        static int LoadFileAll();
     };
 } // namespace GDC
 

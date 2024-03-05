@@ -14,6 +14,12 @@ namespace GDC
 	class Singleton
 	{
 	public:
+		Singleton() = default;
+		virtual ~Singleton() = default;
+
+		Singleton(Singleton const&) = delete; // 복사 생성자 삭제
+		void operator=(Singleton const&) = delete; // 대입 연산자 삭제
+
 		static T* Get()
 		{
 			if (instance == nullptr)
