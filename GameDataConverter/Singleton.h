@@ -2,7 +2,7 @@
 //! @date   2024/02/28
 //! @file   Singleton.h
 //! @author chsoo82
-//! @brief  
+//! @brief  싱글톤 패턴을 구현합니다.
 //!         
 
 #ifndef __GDC_SINGLETON_H__
@@ -17,8 +17,8 @@ namespace GDC
 		Singleton() = default;
 		virtual ~Singleton() = default;
 
-		Singleton(Singleton const&) = delete; // 복사 생성자 삭제
-		void operator=(Singleton const&) = delete; // 대입 연산자 삭제
+		Singleton(Singleton const&) = delete;		// 복사 생성자 삭제
+		void operator=(Singleton const&) = delete;	// 대입 연산자 삭제
 
 		static T* Get()
 		{

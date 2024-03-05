@@ -10,14 +10,16 @@
 
 namespace GDC
 {
+    class TableData;
+    class DataCoordinator;
     class ExcelFileLoader
     {
     public:
         ExcelFileLoader() = default;
         ~ExcelFileLoader() = default;
 
-        static int LoadFile();
-        static int LoadFileAll();
+        static int LoadFile(const tstring& inFileName, TableDataPtr outTableDataPtr);
+        static int LoadFiles(DataCoordinator& outDataCoordinator);
     };
 } // namespace GDC
 

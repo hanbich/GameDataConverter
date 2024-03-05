@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Type.h"
+#include "DataCoordinator.h"
 #include "ExcelFileLoader.h"
 #include "JsonFileWriter.h"
 #include "ConfigJsonParser.h"
@@ -17,10 +18,12 @@ int main()
 {
     ConfigJsonParser::Get()->LoadFile("config.json");
 
-    ExcelFileLoader excelFileLoader;
+    DataCoordinator dataCoordinator;
+    //ExcelFileLoader excelFileLoader;
     JsonFileWriter jsonFileWriter;
 
-    excelFileLoader.LoadFile();
+    //ExcelFileLoader::LoadFile();
+    ExcelFileLoader::LoadFiles(dataCoordinator);
     jsonFileWriter.WriteFile();
 
     ConfigJsonParser::Delete();

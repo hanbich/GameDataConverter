@@ -2,7 +2,7 @@
 //! @date   2024/03/04
 //! @file   DataCoordinator.h
 //! @author chsoo82
-//! @brief  
+//! @brief  Excel 파일들을 로딩 후 데이터를 케싱합니다.
 //!   
 
 #ifndef __GDC_DATA_COORDINATOR_H__
@@ -24,7 +24,7 @@ namespace GDC
 	class TableData
 	{
 	public:
-		TableData();
+		TableData(const tstring& inName);
 		~TableData() = default;
 
 		void SetName(const tstring& inName) { _name = inName; }
@@ -32,6 +32,7 @@ namespace GDC
 		void AddColumnInfo(const ColumnInfo& inColumnInfo) { _columnInfoVec.push_back(inColumnInfo); }
 		void AddRowData(const RowData& inRowData) { _rowDataVec.push_back(inRowData); }
 
+		ColumnInfoVec& GetColumnInfoVec() { return _columnInfoVec; }
 		RowDataVec& GetRowDataVec() { return _rowDataVec; }
 
 		const tstring& GetName() const { return _name; }
@@ -44,12 +45,19 @@ namespace GDC
 		RowDataVec		_rowDataVec;	// 엑셀 파일의 데이터
 	};
 
+	typedef std::shared_ptr<TableData>		TableDataPtr;
+	typedef std::map<tstring, TableDataPtr> TableDataPtrMap;
+
 	class DataCoordinator
 	{
 	public:
-		DataCoordinator() {}
-		~DataCoordinator() {}
+		DataCoordinator() = default;
+		~DataCoordinator() = default;
 
+		TableDataPtr AddTableData(const tstring& inName);
+
+	private:
+		TableDataPtrMap _tableDataPtrMap;	// 테이블 데이터 맵
 	};
 }// namespace GDC
 

@@ -26,6 +26,7 @@ namespace GDC
 	}
 #endif // __FUNCTION_POINTER_SAMPLE__
 
+#pragma region CommandHandler
 	bool CommandHandler::LoadFile()
 	{
 		_LOG_FUNCTION_START;
@@ -69,8 +70,10 @@ namespace GDC
 
 		return true;
 	}
+#pragma endregion // CommandHandler
 
 
+#pragma region CommandCoordinator
 	CommandCoordinator::CommandCoordinator()
 	{
 #ifdef __FUNCTION_POINTER_SAMPLE__
@@ -91,7 +94,7 @@ namespace GDC
 
 	CommandCoordinator::~CommandCoordinator()
 	{
-		_cfMap.clear();
+		_commandFunctionMap.clear();
 	}
 
 	bool CommandCoordinator::InputCommand()
@@ -113,5 +116,6 @@ namespace GDC
 
 		return true;
 	}
+#pragma endregion // DataCoordinator
 } // namespace La1
 

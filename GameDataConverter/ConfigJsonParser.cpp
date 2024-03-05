@@ -15,6 +15,7 @@ using namespace rapidjson;
 
 namespace GDC
 {
+#pragma region ConfigJsonParser
 	ConfigJsonParser::ConfigJsonParser()
 	{
 	}
@@ -48,8 +49,9 @@ namespace GDC
         }
         catch (std::exception& e) {
             //std::cerr << "Error: " << e.what() << std::endl;
-            _LA1_ASSERT(e.what());
+            _GDC_ASSERT(e.what());
             return -1;
         }
 	}
+#pragma endregion // ConfigJsonParser
 } // namespace GDC

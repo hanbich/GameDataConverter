@@ -12,6 +12,8 @@
 #include <time.h>
 #include <random>
 
+#include <unordered_map>
+
 #include "Singleton.h"
 
 typedef char	i8;
@@ -34,5 +36,5 @@ using namespace GDC;
 
 #define _LOG_FUNCTION_START   std::cout << "-- " << __FUNCTION__ << " CodeLine : " << __LINE__ << " START --\n"
 #define _LOG_FUNCTION_END	  std::cout << "-- " << __FUNCTION__ << " CodeLine : " << __LINE__ << " E N D --\n"
-//#define _LA1_ASSERT(x, y)	 if(false == x) std::cout << "Assert - Message : " << #y << "\n"; assert(x);
-#define _LA1_ASSERT(Message) std::cout << "Assert - Function : " << __FUNCTION__ << " - Message : " << #Message << "\n"; assert(false)
+//#define _GDC_ASSERT(x, y)	 if(false == x) std::cout << "Assert - Message : " << #y << "\n"; assert(x);
+#define _GDC_ASSERT(Message) std::cout << "Assert - Function : " << __FUNCTION__ << " - Message : " << #Message << "\n"; assert(false)

@@ -39,18 +39,18 @@ namespace GDC
 		void Insert(const tstring& inCommandStr, T inFunctionT)
 		{
 			const auto functionType = std::type_index(typeid(inFunctionT));
-			const auto findIter = _cfMap.find(inCommandStr);
-			if (findIter == std::end(_cfMap))
+			const auto findIter = _commandFunctionMap.find(inCommandStr);
+			if (findIter == std::end(_commandFunctionMap))
 			{
-				_cfMap.insert(std::make_pair(inCommandStr, std::make_pair((voidFunctionType)inFunctionT, functionType)));
+				_commandFunctionMap.insert(std::make_pair(inCommandStr, std::make_pair((voidFunctionType)inFunctionT, functionType)));
 			}
 		}
 
 		template<typename T, typename... Args>
 		T SearchAndCall(const std::string& inCommandStr, Args&&... args)
 		{
-			auto findIter = _cfMap.find(inCommandStr);
-			if (findIter == std::end(_cfMap))
+			auto findIter = _commandFunctionMap.find(inCommandStr);
+			if (findIter == std::end(_commandFunctionMap))
 			{
 				return T();
 			}
@@ -69,7 +69,7 @@ namespace GDC
 		}
 
 	private:
-		CommandFunctionMap _cfMap;
+		CommandFunctionMap _commandFunctionMap;
 	};
 } // namespace GDC
 

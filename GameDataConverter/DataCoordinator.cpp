@@ -6,7 +6,9 @@ using namespace std;
 
 namespace GDC
 {
-	TableData::TableData()
+#pragma region TableData
+	TableData::TableData(const tstring& inName)
+		: _name(inName)
 	{
 	}
 
@@ -19,5 +21,18 @@ namespace GDC
 
 		_columnInfoVec.push_back(columnInfo);
 	}
+#pragma endregion // TableData
+
+#pragma region DataCoordinator
+	TableDataPtr DataCoordinator::AddTableData(const tstring& inName)
+	{
+		auto retPair = _tableDataPtrMap.insert(make_pair(inName, make_shared<TableData>(inName)));
+		if (retPair.second == false)
+			return nullptr;
+
+		return retPair.first->second;
+	}
+#pragma endregion // DataCoordinator
+
 
 } // namespace GDC

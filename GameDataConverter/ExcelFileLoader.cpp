@@ -10,6 +10,8 @@
 using namespace std;
 using namespace OpenXLSX;
 
+namespace fs = std::filesystem;
+
 namespace GDC
 {
     tstring GetCellValue(const XLCellValue& inValue)
@@ -18,7 +20,7 @@ namespace GDC
 			return tstring();
         else if (inValue.type() == XLValueType::Boolean)
         {
-            return inValue.get<bool>() ? tstring("true") : tstring("false");
+            return inValue.get<bool>() ? tstring("TRUE") : tstring("FALSE");
         }
         else if (inValue.type() == XLValueType::Integer)
         {
@@ -38,13 +40,14 @@ namespace GDC
         }
     }
 
-    int ExcelFileLoader::LoadFile()
+#pragma region ExcelFileLoader
+    int ExcelFileLoader::LoadFile(const tstring& inFileName, TableDataPtr outTableDataPtr)
     {
         try {
             _LOG_FUNCTION_START;
 
             string path = ConfigJsonParser::Get()->GetLoadPath();
-            path += "BaseType.xlsx";
+            path += inFileName;
 
             XLDocument doc(path);
             if (!doc.isOpen())
@@ -57,11 +60,11 @@ namespace GDC
             i32 colIndex = 0;
             i32 colCount = 0;
 
-            ColumnInfoVec   columnInfoVec;
-            RowDataVec      rowDataVec;
+            ColumnInfoVec& columnInfoVec = outTableDataPtr->GetColumnInfoVec();
+            RowDataVec& rowDataVec  = outTableDataPtr->GetRowDataVec();
             for (auto& row : wks.rows()) 
             {
-                colIndex = -2;
+                colIndex = -2; // 인덱스 계산의 편의를 위해 -2로 초기화 합니다.
                 colCount = row.cellCount();
                 if (row.rowNumber() == 1) // Type 
                 {
@@ -109,13 +112,64 @@ namespace GDC
         }
         catch (std::exception& e) {
             //std::cerr << "Error: " << e.what() << std::endl;
-            _LA1_ASSERT(e.what());
+            _GDC_ASSERT(e.what());
             return -1;
         }
     }
 
-    int ExcelFileLoader::LoadFileAll()
+    int ExcelFileLoader::LoadFiles(DataCoordinator& outDataCoordinator)
     {
+        try {
+            _LOG_FUNCTION_START;
+
+            string path = ConfigJsonParser::Get()->GetLoadPath();
+            fs::path p(path);
+
+            std::cout << "내 현재 경로 : " << fs::current_path() << std::endl;
+            std::cout << "상대 경로 : " << p.relative_path() << std::endl;
+            std::cout << "절대 경로 : " << fs::absolute(p) << std::endl;
+            std::cout << "공식적인 절대 경로 : " << fs::canonical(p) << std::endl;
+
+            fs::directory_iterator itr(p);
+            while (itr != fs::end(itr)) 
+            {
+                const fs::directory_entry& entry = *itr;
+                const auto& ext = entry.path().extension();
+
+                const tstring filename = entry.path().filename().string();
+                const tstring tableName = filename.substr(0, filename.find_last_of("."));
+
+                if (ext.string() != ".xlsx")    // 확장자가 xlsx가 아니면 무시
+                {
+                    // 로그 기록 필요
+                    itr++;
+                    continue;
+                }
+
+                auto tableDataPtr = outDataCoordinator.AddTableData(tableName);
+                if (tableDataPtr == nullptr)
+                {
+                    throw runtime_error("failed to insert the file");   // 이름 중복 혹은 메모리 할당 실패
+                }
+
+                if (-1 == LoadFile(filename, tableDataPtr))
+                {
+					throw runtime_error("failed to load the file");
+				}
+                //std::cout << entry.path() << "---" << filename << "---" << tableName << std::endl;
+                itr++;
+            }
+
+            _LOG_FUNCTION_END;
+            return 0;
+        }
+        catch (std::exception& e) {
+            //std::cerr << "Error: " << e.what() << std::endl;
+            _GDC_ASSERT(e.what());
+            return -1;
+        }
+
         return 0;
     }
+#pragma endregion // ExcelFileLoader
 } // namespace GDC
