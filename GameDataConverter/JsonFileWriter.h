@@ -10,6 +10,7 @@
 
 namespace GDC
 {
+    class DataCoordinator;
     class JsonFileWriter
     {
     public:
@@ -17,7 +18,7 @@ namespace GDC
         ~JsonFileWriter() {}
 
         int LoadFile();
-        int WriteFile();
+        int WriteFile(DataCoordinator& refDataCoordinator);
     };
 } // namespace GDC
 

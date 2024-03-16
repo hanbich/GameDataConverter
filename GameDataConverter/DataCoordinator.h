@@ -56,6 +56,8 @@ namespace GDC
 
 		TableDataPtr AddTableData(const tstring& inName);
 
+		const TableDataPtrMap& GetTableDataPtrMap() const { return _tableDataPtrMap; }
+
 	private:
 		TableDataPtrMap _tableDataPtrMap;	// 테이블 데이터 맵
 	};

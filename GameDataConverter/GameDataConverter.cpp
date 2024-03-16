@@ -24,7 +24,7 @@ int main()
 
     //ExcelFileLoader::LoadFile();
     ExcelFileLoader::LoadFiles(dataCoordinator);
-    jsonFileWriter.WriteFile();
+    jsonFileWriter.WriteFile(dataCoordinator);
 
     ConfigJsonParser::Delete();
 
