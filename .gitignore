@@ -30,8 +30,14 @@
 *.exe
 *.out
 *.app
+
 /GameDataConverter/GameData.9d704290
 /GameDataConverter/x64
 /GameDataConverter/.vs
 /GameDataConverter/*.user
-/GameDataConverter/*.user
+
+/GameDataLoadTest/GameData.9d704290
+/GameDataLoadTest/x64
+/GameDataLoadTest/.vs
+/GameDataLoadTest/*.user
+

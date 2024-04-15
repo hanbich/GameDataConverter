@@ -24,7 +24,7 @@ namespace GDC
         }
         else if (inValue.type() == XLValueType::Integer)
         {
-            return std::to_string(inValue.get<int>());
+            return std::to_string(inValue.get<long long>());
         }
         else if (inValue.type() == XLValueType::Float)
         {
