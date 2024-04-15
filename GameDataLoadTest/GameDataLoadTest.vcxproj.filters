@@ -21,6 +21,9 @@
     <ClCompile Include="GameDataTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameDataUtil.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameDataTable.h">
@@ -30,6 +33,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDataUtil.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
