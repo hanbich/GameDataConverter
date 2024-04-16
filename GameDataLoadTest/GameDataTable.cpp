@@ -66,11 +66,6 @@ namespace GDC
 		}
 	}
 
-	//void BaseType_Table::WriteLog() const
-	//{
-
-	//}
-
 	void row_BaseType_temp::Initialize(const Value& inValue)
 	{
 		_ID = GameDataUtil::to_int(inValue[0], _ID);
@@ -124,18 +119,6 @@ namespace GDC
 			_dataMap.insert(std::make_pair(row._ID, row));
 		}
 	}
-
-	//void BaseType_temp_Table::WriteLog() const
-	//{
-	//	std::cout << "-------------------------" << std::endl;
-	//	std::cout << "Table Name - " << _name << std::endl;
-	//	std::cout << "-------------------------" << std::endl;
-
-	//	for (auto& data : _dataMap)
-	//	{
-	//		data.second.WriteLog();
-	//	}
-	//}
 #pragma endregion // GameDataTable
 
 } // namespace GDC

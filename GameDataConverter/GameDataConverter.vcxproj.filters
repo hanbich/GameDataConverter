@@ -17,14 +17,14 @@
     <Filter Include="3.ExecelFile">
       <UniqueIdentifier>{17aae351-e291-4ef0-9ffd-ab555c5c903b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4.SourceFile">
-      <UniqueIdentifier>{e0cdedaf-7121-4144-8bbb-8a23aada67b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="5.JsonFile">
       <UniqueIdentifier>{44bea193-e40a-4036-a874-592ff22a705d}</UniqueIdentifier>
     </Filter>
     <Filter Include="6.Utility">
       <UniqueIdentifier>{cf1faf0e-00ba-40df-affd-e22ac7414db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4.CodeFile">
+      <UniqueIdentifier>{e0cdedaf-7121-4144-8bbb-8a23aada67b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,8 +37,8 @@
     <ClCompile Include="JsonFileWriter.cpp">
       <Filter>5.JsonFile</Filter>
     </ClCompile>
-    <ClCompile Include="SourceGenerator.cpp">
-      <Filter>4.SourceFile</Filter>
+    <ClCompile Include="CodeGenerator.cpp">
+      <Filter>4.CodeFile</Filter>
     </ClCompile>
     <ClCompile Include="CommandCoordinator.cpp">
       <Filter>6.Utility</Filter>
@@ -66,8 +66,8 @@
     <ClInclude Include="JsonFileWriter.h">
       <Filter>5.JsonFile</Filter>
     </ClInclude>
-    <ClInclude Include="SourceGenerator.h">
-      <Filter>4.SourceFile</Filter>
+    <ClInclude Include="CodeGenerator.h">
+      <Filter>4.CodeFile</Filter>
     </ClInclude>
     <ClInclude Include="CommandCoordinator.h">
       <Filter>6.Utility</Filter>

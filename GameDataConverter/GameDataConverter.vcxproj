@@ -142,7 +142,7 @@
     <ClCompile Include="ExcelFileLoader.cpp" />
     <ClCompile Include="GameDataConverter.cpp" />
     <ClCompile Include="JsonFileWriter.cpp" />
-    <ClCompile Include="SourceGenerator.cpp" />
+    <ClCompile Include="CodeGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandCoordinator.h" />
@@ -151,7 +151,7 @@
     <ClInclude Include="ExcelFileLoader.h" />
     <ClInclude Include="JsonFileWriter.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SourceGenerator.h" />
+    <ClInclude Include="CodeGenerator.h" />
     <ClInclude Include="Type.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -11,6 +11,7 @@
 #include "ExcelFileLoader.h"
 #include "JsonFileWriter.h"
 #include "ConfigJsonParser.h"
+#include "CodeGenerator.h"
 
 using namespace GDC;
 
@@ -25,6 +26,14 @@ int main()
     //ExcelFileLoader::LoadFile();
     ExcelFileLoader::LoadFiles(dataCoordinator);
     jsonFileWriter.WriteFile(dataCoordinator);
+
+    // 코드 생성
+    {
+        HeaderFileGenerator hfGenerator("GameDataTable_generated.h");
+        hfGenerator.Generate();
+        SourceFileGenerator sfGenerator("GameDataTable_generated.cpp");
+        sfGenerator.Generate();
+    }
 
     ConfigJsonParser::Delete();
 
