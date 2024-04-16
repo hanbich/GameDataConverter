@@ -20,19 +20,17 @@ int main()
     ConfigJsonParser::Get()->LoadFile("config.json");
 
     DataCoordinator dataCoordinator;
-    //ExcelFileLoader excelFileLoader;
     JsonFileWriter jsonFileWriter;
 
-    //ExcelFileLoader::LoadFile();
     ExcelFileLoader::LoadFiles(dataCoordinator);
     jsonFileWriter.WriteFile(dataCoordinator);
 
     // 코드 생성
     {
         HeaderFileGenerator hfGenerator("GameDataTable_generated.h");
-        hfGenerator.Generate();
+        hfGenerator.Generate(dataCoordinator);
         SourceFileGenerator sfGenerator("GameDataTable_generated.cpp");
-        sfGenerator.Generate();
+        sfGenerator.Generate(dataCoordinator);
     }
 
     ConfigJsonParser::Delete();

@@ -27,7 +27,7 @@ namespace GDC
 	{
 	public:
 		TableBase(const std::string& inName) : _name(inName) {}
-		~TableBase() = default;
+		virtual ~TableBase() = default;
 
 		const std::string& GetName() const { return _name; }
 		virtual void Initialize(const rapidjson::Value& inValue) = 0;
