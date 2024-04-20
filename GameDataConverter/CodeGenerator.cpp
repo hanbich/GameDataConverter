@@ -57,17 +57,17 @@ namespace GDC
 
 	tstring CodeGenerator::GetRowClassName(const tstring& inTableName) const
 	{
-		return "row_" + inTableName;
+		return std::format("row_{}", inTableName);
 	}
 
 	tstring CodeGenerator::GetTableClassName(const tstring& inTableName) const
 	{
-		return inTableName + "_Table";
+		return std::format("{}_Table", inTableName);
 	}
 
 	tstring CodeGenerator::GetMemberValueName(const ColumnInfo& inColumnInfo) const
 	{
-		return "_" + inColumnInfo._name;
+		return std::format("_{}", inColumnInfo._name);
 	}
 
 	tstring CodeGenerator::GetValueType(const ColumnInfo& inColumnInfo) const
@@ -102,7 +102,7 @@ namespace GDC
 		tstring tmpFileName = inFileName;
 		transform(tmpFileName.begin(), tmpFileName.end(), tmpFileName.begin(), ::toupper);
 
-		_defFileName = "__GDC_" + tmpFileName + "__";
+		_defFileName = std::format("__GDC_{}__", tmpFileName);
 	}
 
 	HeaderFileGenerator::~HeaderFileGenerator()
@@ -128,11 +128,11 @@ namespace GDC
 	{
 		AddLine("#pragma once");
 		AddLine("");
-		AddLine("//! @file   " + GetFileName());
+		AddLine(std::format("//! @file   {}", GetFileName()));
 		AddLine("//! @brief  자동 생성된 파일입니다. 임의로 수정하지 마세요.");
 		AddLine("");
-		AddLine("#ifndef " + _defFileName);
-		AddLine("#define " + _defFileName);
+		AddLine(std::format("#ifndef {}", _defFileName));
+		AddLine(std::format("#define {}", _defFileName));
 		AddLine("");
 		AddLine("namespace GDC");
 		AddLine("{");
@@ -141,7 +141,7 @@ namespace GDC
 	void HeaderFileGenerator::EndStream()
 	{
 		AddLine("}");
-		AddLine("#endif // " + _defFileName);
+		AddLine(std::format("#endif // ", _defFileName));
 	}
 
 	void HeaderFileGenerator::BaseClassStream()
@@ -200,11 +200,11 @@ namespace GDC
 		}
 		else if ((valType == "float") || (valType == "double"))
 		{
-			defaultVal = defaultVal + "f";
+			defaultVal = std::format("{}f", defaultVal);
 		}
 		else if (valType == "string")
 		{
-			defaultVal = "\"" + defaultVal + "\"";
+			defaultVal = std::format("\"{}\"", defaultVal);
 		}
 
 		return defaultVal;
@@ -265,7 +265,8 @@ namespace GDC
 	SourceFileGenerator::SourceFileGenerator(const tstring inFileName)
 		: CodeGenerator(inFileName)
 	{
-
+		_headerFileName = inFileName.substr(0, (inFileName.size() - 3));
+		_headerFileName += "h";
 	}
 
 	SourceFileGenerator::~SourceFileGenerator()
@@ -279,6 +280,7 @@ namespace GDC
 
 		for (const auto& tableDataPair : inDataCoordinator.GetTableDataPtrMap())
 		{
+			RawClassStream(tableDataPair.first, tableDataPair.second);
 			TableClassStream(tableDataPair.first, tableDataPair.second);
 		}
 
@@ -295,8 +297,8 @@ namespace GDC
 		AddLine("");
 		AddLine("#include \"Type.h\"");
 		AddLine("");
-		AddLine("#include \"ConfigJsonParser.h\"");
-		AddLine("#include \"SourceGenerator.h\"");
+		AddLine("#include \"GameDataUtil.h\"");
+		AddLine(std::format("#include \"{}\"", _headerFileName));
 		AddLine("");
 		AddLine("using namespace std;");
 		AddLine("using namespace rapidjson;");
@@ -310,10 +312,83 @@ namespace GDC
 		AddLine("}");
 	}
 
+	void SourceFileGenerator::RawClassMemberInitialize(const i32 inIndex, const ColumnInfo& inColumnInfo, const i32 inTabCount)
+	{
+		const tstring&& valueType = GetValueType(inColumnInfo);
+		const tstring&& valueName = GetMemberValueName(inColumnInfo);
+
+		AddLine(std::format("{} = GameDataUtil::to_{}(inValue[{}], {});", valueName, inColumnInfo._type, inIndex, valueName), inTabCount);
+	}
+
+	void SourceFileGenerator::RawClassMemberWriteLog(const ColumnInfo& inColumnInfo, const i32 inTabCount)
+	{
+		const tstring&& valueName = GetMemberValueName(inColumnInfo);
+
+		AddLine(std::format("std::cout << \"{} : \" << {} << std::endl;", valueName, valueName), inTabCount);
+	}
+
+	void SourceFileGenerator::RawClassInitializeFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount)
+	{
+		AddLine(std::format("void {}::Initialize(const Value& inValue)", inRowClassName), inTabCount);
+		AddLine("{", inTabCount);
+		i32 idx = 0;
+		for (const auto& columnData : inTableDataPtr->GetColumnInfoVec())
+		{
+			RawClassMemberInitialize(idx, columnData, inTabCount + 1);
+			idx++;
+		}
+		AddLine("}", inTabCount);
+		AddLine("");
+	}
+
+	void SourceFileGenerator::RawClassWriteLogFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount)
+	{
+		AddLine(std::format("void {}::WriteLog() const", inRowClassName), inTabCount);
+		AddLine("{", inTabCount);
+		AddLine("std::cout << \"-------------------------\" << std::endl;", inTabCount + 1);
+		for (const auto& columnData : inTableDataPtr->GetColumnInfoVec())
+		{
+			RawClassMemberWriteLog(columnData, inTabCount + 1);
+		}
+		AddLine("std::cout << \"-------------------------\" << std::endl;", inTabCount + 1);
+		AddLine("}", inTabCount);
+		AddLine("");
+	}
+
+	void SourceFileGenerator::TableClassInitializeFuncStream(const tstring inRowClassName, const tstring inTableName, const TableDataPtr inTableDataPtr, const i32 inTabCount)
+	{
+		AddLine(std::format("void {}::Initialize(const rapidjson::Value& inValue)", inTableName), inTabCount);
+		AddLine("{", inTabCount);
+		AddLine("for (SizeType i = 0; i < inValue.Size(); i++)", inTabCount + 1);
+		AddLine("{", inTabCount + 1);
+		AddLine(std::format("{} row;", inRowClassName), inTabCount + 2);
+		AddLine("row.Initialize(inValue[i]);", inTabCount + 2);
+		AddLine("_dataMap.insert(std::make_pair(row._ID, row));", inTabCount + 2);
+		AddLine("}", inTabCount + 1);
+		AddLine("}", inTabCount);
+		AddLine("");
+	}
+
+	void SourceFileGenerator::RawClassStream(const tstring& inTableName, const TableDataPtr inTableDataPtr)
+	{
+		const i32 tabCount = 1;
+		const tstring rowClassName = GetRowClassName(inTableName);
+
+		// void row_BaseType::Initialize(const Value& inValue) 함수 코드 생성
+		RawClassInitializeFuncStream(rowClassName, inTableDataPtr, tabCount);
+
+		// void row_BaseType::WriteLog() const 함수 코드 생성
+		RawClassWriteLogFuncStream(rowClassName, inTableDataPtr, tabCount);
+	}
+
 	void SourceFileGenerator::TableClassStream(const tstring& inTableName, const TableDataPtr inTableDataPtr)
 	{
-		//AddLine("}");
-		//AddLine("#endif // " + _defFileName);
+		const i32 tabCount = 1;
+		const tstring rowClassName = GetRowClassName(inTableName);
+		const tstring tableClassName = GetTableClassName(inTableName);
+
+		// void BaseType_Table::Initialize(const rapidjson::Value& inValue) 함수 코드 생성
+		TableClassInitializeFuncStream(rowClassName, tableClassName, inTableDataPtr, tabCount);
 	}
 
 #pragma endregion // SourceFileGenerator

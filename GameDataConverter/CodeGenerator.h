@@ -10,6 +10,7 @@
 
 namespace GDC
 {
+	// 코드 생성기 Base 클래스
     class CodeGenerator
     {
 	public:
@@ -43,6 +44,7 @@ namespace GDC
 		std::shared_ptr<std::ofstream> _ofStreamPtr = nullptr;
 	};
 
+	// .h 파일 생성
 	class HeaderFileGenerator : public CodeGenerator
 	{
 	public:
@@ -66,6 +68,7 @@ namespace GDC
 		tstring _defFileName;	// 디파인 정의용 파일명
 	};
 
+	// .cpp 파일 생성
 	class SourceFileGenerator : public CodeGenerator
 	{
 	public:
@@ -78,7 +81,19 @@ namespace GDC
 		void StartStream();
 		void EndStream();
 
+		void RawClassMemberInitialize(const i32 inIndex, const ColumnInfo& inColumnInfo, const i32 inTabCount);
+		void RawClassMemberWriteLog(const ColumnInfo& inColumnInfo, const i32 inTabCount);
+
+		void RawClassInitializeFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount);
+		void RawClassWriteLogFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount);
+
+		void TableClassInitializeFuncStream(const tstring inRowClassName, const tstring inTableName, const TableDataPtr inTableDataPtr, const i32 inTabCount);
+
+		void RawClassStream(const tstring& inTableName, const TableDataPtr inTableDataPtr);
 		void TableClassStream(const tstring& inTableName, const TableDataPtr inTableDataPtr);
+
+	private:
+			tstring _headerFileName;	// 헤더 파일명
 	};
 
 } // namespace GDC

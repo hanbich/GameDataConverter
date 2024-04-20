@@ -175,6 +175,28 @@ namespace GDC
 		return val;
 	}
 
+	long long GameDataUtil::to_int64(const rapidjson::Value& inValue, const long long inDefalutVal)
+	{
+		long long val = atoll(inValue.GetString());
+		if ((val > LLONG_MAX) || (val < LLONG_MIN))
+		{
+			_GDC_ASSERT("Invalid int Value");
+			return inDefalutVal;
+		}
+		return val;
+	}
+
+	unsigned long long GameDataUtil::to_uint64(const rapidjson::Value& inValue, const unsigned long long inDefalutVal)
+	{
+		unsigned long long val = std::stoull(inValue.GetString());
+		if ((val > ULLONG_MAX) || (val < 0))
+		{
+			_GDC_ASSERT("Invalid int Value");
+			return inDefalutVal;
+		}
+		return val;
+	}
+
 	std::string	 GameDataUtil::to_string(const rapidjson::Value& inValue, const std::string& inDefalutVal)
 	{
 		if (inValue.IsNull())
