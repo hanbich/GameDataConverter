@@ -1,7 +1,7 @@
 //! @date   2024/04/16
 //! @file   CodeGenerator.h
 //! @author chsoo82
-//! @brief  타 프로젝트에서 json 파일을 쉽게 파싱하기 위한 인터페이스에 대한 소스코드 생성
+//! @brief  타 프로젝트에서 json 파일을 쉽게 로드하기 위한 인터페이스에 대한 소스코드 생성
 
 #pragma once
 
@@ -48,7 +48,7 @@ namespace GDC
 	class HeaderFileGenerator : public CodeGenerator
 	{
 	public:
-		HeaderFileGenerator(const tstring inFileName);
+		HeaderFileGenerator(const tstring& inFileName);
 		virtual ~HeaderFileGenerator();
 
 		virtual void Generate(const DataCoordinator& inDataCoordinator) override;
@@ -72,7 +72,7 @@ namespace GDC
 	class SourceFileGenerator : public CodeGenerator
 	{
 	public:
-		SourceFileGenerator(const tstring inFileName);
+		SourceFileGenerator(const tstring& inFileName);
 		virtual ~SourceFileGenerator();
 
 		virtual void Generate(const DataCoordinator& inDataCoordinator) override;

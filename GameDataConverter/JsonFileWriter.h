@@ -17,7 +17,7 @@ namespace GDC
         JsonFileWriter() {}
         ~JsonFileWriter() {}
 
-        int LoadFile();
+        //int LoadFile();
         int WriteFile(DataCoordinator& refDataCoordinator);
     };
 } // namespace GDC

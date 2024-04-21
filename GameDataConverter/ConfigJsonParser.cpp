@@ -33,11 +33,11 @@ namespace GDC
             doc.Parse(json.c_str());
 
             // JSON °´Ã¼ ÀÐ±â
-            Value& loadPath = doc["LoadPath"];
-            _loadPath = loadPath.GetString();
-
-            Value& writePath = doc["WritePath"];
-            _writePath = writePath.GetString();
+            _loadPath = doc["LoadPath"].GetString();
+            _writeDataPath = doc["WriteDataPath"].GetString();
+            _writeDataFileName = doc["WriteDataFileName"].GetString();
+            _writeSrcPath = doc["WriteSrcPath"].GetString();
+            _writeSrcFileName = doc["WriteSrcFileName"].GetString();
 
             _LOG_FUNCTION_END;
             return 0;

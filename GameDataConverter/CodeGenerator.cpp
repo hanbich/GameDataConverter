@@ -17,7 +17,7 @@ namespace GDC
 	CodeGenerator::CodeGenerator(const tstring& inFileName)
 		: _fileName(inFileName)
 	{
-		string path = ConfigJsonParser::Get()->GetWritePath();
+		string path = ConfigJsonParser::Get()->GetWriteSrcPath();
 		path += inFileName;
 		_ofStreamPtr = make_shared<ofstream>(path, std::ios::out | std::ios::trunc); // 파일의 내용을 모두 삭제하고 쓰기 모드로 열기
 		if((_ofStreamPtr == nullptr) || (_ofStreamPtr->fail()))
@@ -96,14 +96,14 @@ namespace GDC
 #pragma endregion // CodeGenerator
 
 #pragma region HeaderFileGenerator
-	HeaderFileGenerator::HeaderFileGenerator(const tstring inFileName)
-		: CodeGenerator(inFileName)
+	HeaderFileGenerator::HeaderFileGenerator(const tstring& inFileName)
+		: CodeGenerator(inFileName + ".h")
 	{
 		tstring tmpFileName = inFileName;
 		transform(tmpFileName.begin(), tmpFileName.end(), tmpFileName.begin(), ::toupper);
-		tmpFileName[inFileName.size()-2] = '_';
+		//tmpFileName[inFileName.size()-2] = '_';
 
-		_defFileName = std::format("__GDC_{}__", tmpFileName);
+		_defFileName = std::format("__GDC_{}_H__", tmpFileName);
 	}
 
 	HeaderFileGenerator::~HeaderFileGenerator()
@@ -263,11 +263,10 @@ namespace GDC
 #pragma endregion // HeaderFileGenerator
 
 #pragma region SourceFileGenerator
-	SourceFileGenerator::SourceFileGenerator(const tstring inFileName)
-		: CodeGenerator(inFileName)
+	SourceFileGenerator::SourceFileGenerator(const tstring& inFileName)
+		: CodeGenerator(inFileName + ".cpp")
 	{
-		_headerFileName = inFileName.substr(0, (inFileName.size() - 3));
-		_headerFileName += "h";
+		_headerFileName = inFileName + ".h";
 	}
 
 	SourceFileGenerator::~SourceFileGenerator()

@@ -21,11 +21,18 @@ namespace GDC
 		int LoadFile(std::string inPath);
 
 		const std::string& GetLoadPath() const { return _loadPath; }
-		const std::string& GetWritePath() const { return _writePath; }
+		const std::string& GetWriteDataPath() const { return _writeDataPath; }
+		const std::string& GetWriteDataFileName() const { return _writeDataFileName; }
+		const std::string  GetWriteDataFullPath() const { return (_writeDataPath + _writeDataFileName); }
+		const std::string& GetWriteSrcPath() const { return _writeSrcPath; }
+		const std::string& GetWriteSrcFileName() const { return _writeSrcFileName; }
 
 	private:
 		std::string _loadPath;
-		std::string _writePath;
+		std::string _writeDataPath;
+		std::string _writeDataFileName;
+		std::string _writeSrcPath;
+		std::string _writeSrcFileName;
 	};
 
 } // namespace GDC

@@ -27,9 +27,10 @@ int main()
 
     // 코드 생성
     {
-        HeaderFileGenerator hfGenerator("GameDataTable_generated.h");
+        const tstring& srcFileName = ConfigJsonParser::Get()->GetWriteSrcFileName();
+        HeaderFileGenerator hfGenerator(srcFileName);
         hfGenerator.Generate(dataCoordinator);
-        SourceFileGenerator sfGenerator("GameDataTable_generated.cpp");
+        SourceFileGenerator sfGenerator(srcFileName);
         sfGenerator.Generate(dataCoordinator);
     }
 
