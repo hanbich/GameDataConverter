@@ -13,11 +13,9 @@ namespace GDC
 	class CommandHandler
 	{
 	public:
-		static bool LoadFile();
-		static bool OutPutFileProbabilityData();
-		static bool PrintProbabilityData();
-		static bool GenerateLottoNombers();
-		static bool ClearData();
+		static bool GenerateAll();
+		static bool GenerateDataOnly();
+		static bool GenerateSrcOnly();
 	};
 
 	class CommandCoordinator : public Singleton<CommandCoordinator>
@@ -32,7 +30,7 @@ namespace GDC
 		CommandCoordinator();
 		~CommandCoordinator();
 
-		bool InputCommand();
+		bool InputCommand(const tstring& inCommand);
 
 	private:
 		template<typename T>
@@ -57,7 +55,6 @@ namespace GDC
 
 			auto functionPair = findIter->second;
 
-			// auto typeCastedFun = reinterpret_cast<T(*)(Args ...)>(mapVal.first); 
 			auto typeCastedFunction = (T(*)(Args ...))(functionPair.first);
 
 			if (functionPair.second != std::type_index(typeid(typeCastedFunction)))

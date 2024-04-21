@@ -7,35 +7,29 @@
 #include <iostream>
 
 #include "GameDataType.h"
-#include "DataCoordinator.h"
-#include "ExcelFileLoader.h"
-#include "JsonFileWriter.h"
 #include "ConfigJsonParser.h"
-#include "CodeGenerator.h"
+#include "CommandCoordinator.h"
 
 using namespace GDC;
 
-int main()
+int main(int argv, char* argc[])
 {
+    _LOG_FUNCTION_START;
     ConfigJsonParser::Get()->LoadFile("config.json");
 
-    DataCoordinator dataCoordinator;
-    JsonFileWriter jsonFileWriter;
-
-    ExcelFileLoader::LoadFiles(dataCoordinator);
-    jsonFileWriter.WriteFile(dataCoordinator);
-
-    // 코드 생성
+    CommandCoordinator commandCoordinator;
+    if (argv > 1)
     {
-        const tstring& srcFileName = ConfigJsonParser::Get()->GetWriteSrcFileName();
-        HeaderFileGenerator hfGenerator(srcFileName);
-        hfGenerator.Generate(dataCoordinator);
-        SourceFileGenerator sfGenerator(srcFileName);
-        sfGenerator.Generate(dataCoordinator);
+		commandCoordinator.InputCommand(argc[1]);
+	}
+    else
+    {
+        commandCoordinator.InputCommand("all");
     }
 
     ConfigJsonParser::Delete();
 
+    _LOG_FUNCTION_END;
     return 0;
 }
 

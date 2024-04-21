@@ -44,7 +44,7 @@ namespace GDC
     int ExcelFileLoader::LoadFile(const tstring& inFileName, TableDataPtr outTableDataPtr)
     {
         try {
-            _LOG_FUNCTION_START;
+            //_LOG_FUNCTION_START;
 
             string path = ConfigJsonParser::Get()->GetLoadPath();
             path += inFileName;
@@ -68,7 +68,7 @@ namespace GDC
                 colCount = row.cellCount();
                 if (row.rowNumber() == 1) // Type 
                 {
-                    for (auto& value : std::vector<XLCellValue>(row.values())) 
+                    for (auto& value : vector<XLCellValue>(row.values())) 
                     {
                         if (++colIndex < 0) // 첫번때 컬럼은 설명임으로 생략
                             continue;
@@ -80,7 +80,7 @@ namespace GDC
 				}
                 else if (row.rowNumber() == 2 || row.rowNumber() == 3) // default value, name
                 {
-                    for (auto& value : std::vector<XLCellValue>(row.values()))
+                    for (auto& value : vector<XLCellValue>(row.values()))
                     {
                         if (++colIndex < 0) // 첫번때 컬럼은 설명임으로 생략
                             continue;
@@ -97,7 +97,7 @@ namespace GDC
                     rowDataVec.push_back(RowData());
 					auto& refRowData = rowDataVec.back();
                     refRowData.assign(colCount - 1, tstring());
-                    for (auto& value : std::vector<XLCellValue>(row.values()))
+                    for (auto& value : vector<XLCellValue>(row.values()))
                     {
                         if (++colIndex < 0) // 첫번때 컬럼은 설명임으로 생략
                             continue;
@@ -105,9 +105,10 @@ namespace GDC
                         refRowData[colIndex] = move(GetCellValue(value));
                     }
 				}
-			}   
+			}
 
-            _LOG_FUNCTION_END;
+            _LOG_MESSAGE(format("Excel File Load Complate - {}", inFileName));
+
             return 0;
         }
         catch (std::exception& e) {
@@ -124,11 +125,6 @@ namespace GDC
 
             string path = ConfigJsonParser::Get()->GetLoadPath();
             fs::path p(path);
-
-            std::cout << "내 현재 경로 : " << fs::current_path() << std::endl;
-            std::cout << "상대 경로 : " << p.relative_path() << std::endl;
-            std::cout << "절대 경로 : " << fs::absolute(p) << std::endl;
-            std::cout << "공식적인 절대 경로 : " << fs::canonical(p) << std::endl;
 
             fs::directory_iterator itr(p);
             while (itr != fs::end(itr)) 

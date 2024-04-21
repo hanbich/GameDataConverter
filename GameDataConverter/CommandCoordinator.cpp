@@ -1,70 +1,66 @@
+#include <format>
+
 #include "GameDataType.h" 
+#include "DataCoordinator.h"
+#include "ExcelFileLoader.h"
+#include "JsonFileWriter.h"
+#include "ConfigJsonParser.h"
+#include "CodeGenerator.h"
 #include "CommandCoordinator.h"
 
 //#define __FUNCTION_POINTER_SAMPLE__
+using namespace std;
+
 namespace GDC
 {
-#ifdef __FUNCTION_POINTER_SAMPLE__
-	void fun1(void) {
-		std::cout << "inside fun1\n";
-	}
-
-	int fun2() {
-		std::cout << "inside fun2\n";
-		return 2;
-	}
-
-	int fun3(int a) {
-		std::cout << "inside fun3\n";
-		return a;
-	}
-
-	std::vector<int> fun4() {
-		std::cout << "inside fun4\n";
-		std::vector<int> v(4, 100);
-		return v;
-	}
-#endif // __FUNCTION_POINTER_SAMPLE__
-
 #pragma region CommandHandler
-	bool CommandHandler::LoadFile()
+	bool CommandHandler::GenerateAll()
 	{
 		_LOG_FUNCTION_START;
+
+		DataCoordinator dataCoordinator;
+		JsonFileWriter jsonFileWriter;
+
+		ExcelFileLoader::LoadFiles(dataCoordinator);
+		jsonFileWriter.WriteFile(dataCoordinator);
+
+		// 코드 생성
+		const tstring& srcFileName = ConfigJsonParser::Get()->GetWriteSrcFileName();
+
+		HeaderFileGenerator hfGenerator(srcFileName);
+		hfGenerator.Generate(dataCoordinator);
+
+		SourceFileGenerator sfGenerator(srcFileName);
+		sfGenerator.Generate(dataCoordinator);
 
 		_LOG_FUNCTION_END;
 		return true;
 	}
 
-	bool CommandHandler::OutPutFileProbabilityData()
+	bool CommandHandler::GenerateDataOnly()
 	{
 		_LOG_FUNCTION_START;
+
+		DataCoordinator dataCoordinator;
+		JsonFileWriter jsonFileWriter;
+
+		ExcelFileLoader::LoadFiles(dataCoordinator);
+		jsonFileWriter.WriteFile(dataCoordinator);
 
 		_LOG_FUNCTION_END;
 
 		return true;
 	}
 
-	bool CommandHandler::PrintProbabilityData()
+	bool CommandHandler::GenerateSrcOnly()
 	{
 		_LOG_FUNCTION_START;
 
-		_LOG_FUNCTION_END;
+		DataCoordinator dataCoordinator;
+		JsonFileWriter jsonFileWriter;
 
-		return true;
-	}
-
-	bool CommandHandler::GenerateLottoNombers()
-	{
-		_LOG_FUNCTION_START;
-
-		_LOG_FUNCTION_END;
-
-		return true;
-	}
-
-	bool CommandHandler::ClearData()
-	{
-		_LOG_FUNCTION_START;
+		ExcelFileLoader::LoadFiles(dataCoordinator);
+		jsonFileWriter.WriteFile(dataCoordinator);
 
 		_LOG_FUNCTION_END;
 
@@ -76,20 +72,9 @@ namespace GDC
 #pragma region CommandCoordinator
 	CommandCoordinator::CommandCoordinator()
 	{
-#ifdef __FUNCTION_POINTER_SAMPLE__
-		{
-			Insert("fun1", fun1);
-			Insert("fun2", fun2);
-			Insert("fun3", fun3);
-			Insert("fun4", fun4);
-		}
-#endif // __FUNCTION_POINTER_SAMPLE__
-
-		Insert("load", CommandHandler::LoadFile);
-		Insert("output", CommandHandler::OutPutFileProbabilityData);
-		Insert("print", CommandHandler::PrintProbabilityData);
-		Insert("generate", CommandHandler::GenerateLottoNombers);
-		Insert("clear", CommandHandler::ClearData);
+		Insert("all", CommandHandler::GenerateAll);
+		Insert("data", CommandHandler::GenerateDataOnly);
+		Insert("src", CommandHandler::GenerateSrcOnly);
 	}
 
 	CommandCoordinator::~CommandCoordinator()
@@ -97,24 +82,31 @@ namespace GDC
 		_commandFunctionMap.clear();
 	}
 
-	bool CommandCoordinator::InputCommand()
+	bool CommandCoordinator::InputCommand(const tstring& inCommand)
 	{
-#ifdef __FUNCTION_POINTER_SAMPLE__
+		_LOG_MESSAGE(format("inCommand - {}", inCommand));
+		if (inCommand.empty())
 		{
-			SearchAndCall<void>("fun1");
-			int retVal = SearchAndCall<int>("fun3", 2);
-			SearchAndCall<int>("fun2");
-			auto temp = SearchAndCall<std::vector<int>>("fun4");
+			return SearchAndCall<bool>("all");
 		}
-#endif // __FUNCTION_POINTER_SAMPLE__
+		else if (inCommand == "all")
+		{
+			return SearchAndCall<bool>("all");
+		}
+		else if (inCommand == "data")
+		{
+			return SearchAndCall<bool>("data");
+		}
+		else if (inCommand == "src")
+		{
+			return SearchAndCall<bool>("src");
+		}
+		else
+		{
+			_GDC_ASSERT("Invalid Command");
+		}
 
-		bool retVal1 = SearchAndCall<bool>("load");
-		bool retVal2 = SearchAndCall<bool>("output");
-		bool retVal3 = SearchAndCall<bool>("print");
-		bool retVal4 = SearchAndCall<bool>("generate");
-		bool retVal5 = SearchAndCall<bool>("clear");
-
-		return true;
+		return false;
 	}
 #pragma endregion // DataCoordinator
 } // namespace La1

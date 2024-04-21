@@ -19,7 +19,7 @@ namespace GDC
 	{
 		string path = ConfigJsonParser::Get()->GetWriteSrcPath();
 		path += inFileName;
-		_ofStreamPtr = make_shared<ofstream>(path, std::ios::out | std::ios::trunc); // 파일의 내용을 모두 삭제하고 쓰기 모드로 열기
+		_ofStreamPtr = make_shared<ofstream>(path, ios::out | ios::trunc); // 파일의 내용을 모두 삭제하고 쓰기 모드로 열기
 		if((_ofStreamPtr == nullptr) || (_ofStreamPtr->fail()))
 		{
 			tstring message = "Failed to open file: " + path;
@@ -57,17 +57,17 @@ namespace GDC
 
 	tstring CodeGenerator::GetRowClassName(const tstring& inTableName) const
 	{
-		return std::format("row_{}", inTableName);
+		return format("row_{}", inTableName);
 	}
 
 	tstring CodeGenerator::GetTableClassName(const tstring& inTableName) const
 	{
-		return std::format("{}_Table", inTableName);
+		return format("{}_Table", inTableName);
 	}
 
 	tstring CodeGenerator::GetMemberValueName(const ColumnInfo& inColumnInfo) const
 	{
-		return std::format("_{}", inColumnInfo._name);
+		return format("_{}", inColumnInfo._name);
 	}
 
 	tstring CodeGenerator::GetValueType(const ColumnInfo& inColumnInfo) const
@@ -102,7 +102,7 @@ namespace GDC
 		tstring tmpFileName = inFileName;
 		transform(tmpFileName.begin(), tmpFileName.end(), tmpFileName.begin(), ::toupper);
 
-		_defFileName = std::format("__GDC_{}_H__", tmpFileName);
+		_defFileName = format("__GDC_{}_H__", tmpFileName);
 	}
 
 	HeaderFileGenerator::~HeaderFileGenerator()
@@ -112,6 +112,7 @@ namespace GDC
 
 	void HeaderFileGenerator::Generate(const DataCoordinator& inDataCoordinator)
 	{
+		_LOG_FUNCTION_START;
 		StartStream();
 		BaseClassStream();
 
@@ -122,17 +123,18 @@ namespace GDC
 		}
 
 		EndStream();
+		_LOG_FUNCTION_END;
 	}
 
 	void HeaderFileGenerator::StartStream()
 	{
 		AddLine("#pragma once");
 		AddLine("");
-		AddLine(std::format("//! @file   {}", GetFileName()));
+		AddLine(format("//! @file   {}", GetFileName()));
 		AddLine("//! @brief  자동 생성된 파일입니다. 임의로 수정하지 마세요.");
 		AddLine("");
-		AddLine(std::format("#ifndef {}", _defFileName));
-		AddLine(std::format("#define {}", _defFileName));
+		AddLine(format("#ifndef {}", _defFileName));
+		AddLine(format("#define {}", _defFileName));
 		AddLine("");
 		AddLine("namespace GDC");
 		AddLine("{");
@@ -141,7 +143,7 @@ namespace GDC
 	void HeaderFileGenerator::EndStream()
 	{
 		AddLine("}");
-		AddLine(std::format("#endif // ", _defFileName));
+		AddLine(format("#endif // ", _defFileName));
 	}
 
 	void HeaderFileGenerator::BaseClassStream()
@@ -200,11 +202,11 @@ namespace GDC
 		}
 		else if (valType == "float")
 		{
-			defaultVal = std::format("{}f", defaultVal);
+			defaultVal = format("{}f", defaultVal);
 		}
 		else if (valType == "string")
 		{
-			defaultVal = std::format("\"{}\"", defaultVal);
+			defaultVal = format("\"{}\"", defaultVal);
 		}
 
 		return defaultVal;
@@ -216,7 +218,7 @@ namespace GDC
 		const tstring&& valueName = GetMemberValueName(inColumnInfo);
 		const tstring&& defaultVal = GetDefaultValue(inColumnInfo);
 
-		AddLine(std::format("{} {} = {};", valueType, valueName, defaultVal), inTabCount);
+		AddLine(format("{} {} = {};", valueType, valueName, defaultVal), inTabCount);
 	}
 
 	void HeaderFileGenerator::RawClassStream(const tstring& inTableName, const TableDataPtr inTableDataPtr)
@@ -224,11 +226,11 @@ namespace GDC
 		const i32 tabCount = 1;
 		const tstring rowClassName = GetRowClassName(inTableName);
 
-		AddLine(std::format("class {} : public row_TableBase", rowClassName), tabCount);
+		AddLine(format("class {} : public row_TableBase", rowClassName), tabCount);
 		AddLine("{", tabCount);
 		AddLine("public:", tabCount);
-		AddLine(std::format("{}() = default;", rowClassName), tabCount + 1);
-		AddLine(std::format("~{}() = default;", rowClassName), tabCount + 1);
+		AddLine(format("{}() = default;", rowClassName), tabCount + 1);
+		AddLine(format("~{}() = default;", rowClassName), tabCount + 1);
 		AddLine("");
 		AddLine("public:", tabCount);
 		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
@@ -249,11 +251,11 @@ namespace GDC
 		const tstring rowClassName = GetRowClassName(inTableName);
 		const tstring tableClassName = GetTableClassName(inTableName);
 
-		AddLine(std::format("class {} : public TableBase<{}>", tableClassName, rowClassName), tabCount);
+		AddLine(format("class {} : public TableBase<{}>", tableClassName, rowClassName), tabCount);
 		AddLine("{", tabCount);
 		AddLine("public:", tabCount);
-		AddLine(std::format("{}() : TableBase(\"{}\")", tableClassName, inTableName) + "{}", tabCount + 1);
-		AddLine(std::format("~{}() = default;", tableClassName), tabCount + 1);
+		AddLine(format("{}() : TableBase(\"{}\")", tableClassName, inTableName) + "{}", tabCount + 1);
+		AddLine(format("~{}() = default;", tableClassName), tabCount + 1);
 		AddLine("");
 		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
 		AddLine("};", tabCount);
@@ -275,6 +277,7 @@ namespace GDC
 
 	void SourceFileGenerator::Generate(const DataCoordinator& inDataCoordinator)
 	{
+		_LOG_FUNCTION_START;
 		StartStream();
 
 		for (const auto& tableDataPair : inDataCoordinator.GetTableDataPtrMap())
@@ -284,6 +287,7 @@ namespace GDC
 		}
 
 		EndStream();
+		_LOG_FUNCTION_END;
 	}
 
 	void SourceFileGenerator::StartStream()
@@ -297,7 +301,7 @@ namespace GDC
 		AddLine("#include \"GameDataType.h\"");
 		AddLine("");
 		AddLine("#include \"GameDataUtil.h\"");
-		AddLine(std::format("#include \"{}\"", _headerFileName));
+		AddLine(format("#include \"{}\"", _headerFileName));
 		AddLine("");
 		AddLine("using namespace std;");
 		AddLine("using namespace rapidjson;");
@@ -316,19 +320,19 @@ namespace GDC
 		const tstring&& valueType = GetValueType(inColumnInfo);
 		const tstring&& valueName = GetMemberValueName(inColumnInfo);
 
-		AddLine(std::format("{} = GameDataUtil::to_{}(inValue[{}], {});", valueName, inColumnInfo._type, inIndex, valueName), inTabCount);
+		AddLine(format("{} = GameDataUtil::to_{}(inValue[{}], {});", valueName, inColumnInfo._type, inIndex, valueName), inTabCount);
 	}
 
 	void SourceFileGenerator::RawClassMemberWriteLog(const ColumnInfo& inColumnInfo, const i32 inTabCount)
 	{
 		const tstring&& valueName = GetMemberValueName(inColumnInfo);
 
-		AddLine(std::format("std::cout << \"{} : \" << {} << std::endl;", valueName, valueName), inTabCount);
+		AddLine(format("std::cout << \"{} : \" << {} << std::endl;", valueName, valueName), inTabCount);
 	}
 
 	void SourceFileGenerator::RawClassInitializeFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount)
 	{
-		AddLine(std::format("void {}::Initialize(const Value& inValue)", inRowClassName), inTabCount);
+		AddLine(format("void {}::Initialize(const Value& inValue)", inRowClassName), inTabCount);
 		AddLine("{", inTabCount);
 		i32 idx = 0;
 		for (const auto& columnData : inTableDataPtr->GetColumnInfoVec())
@@ -342,7 +346,7 @@ namespace GDC
 
 	void SourceFileGenerator::RawClassWriteLogFuncStream(const tstring inRowClassName, const TableDataPtr inTableDataPtr, const i32 inTabCount)
 	{
-		AddLine(std::format("void {}::WriteLog() const", inRowClassName), inTabCount);
+		AddLine(format("void {}::WriteLog() const", inRowClassName), inTabCount);
 		AddLine("{", inTabCount);
 		AddLine("std::cout << \"-------------------------\" << std::endl;", inTabCount + 1);
 		for (const auto& columnData : inTableDataPtr->GetColumnInfoVec())
