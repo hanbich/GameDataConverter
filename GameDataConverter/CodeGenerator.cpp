@@ -101,7 +101,6 @@ namespace GDC
 	{
 		tstring tmpFileName = inFileName;
 		transform(tmpFileName.begin(), tmpFileName.end(), tmpFileName.begin(), ::toupper);
-		//tmpFileName[inFileName.size()-2] = '_';
 
 		_defFileName = std::format("__GDC_{}_H__", tmpFileName);
 	}

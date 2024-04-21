@@ -140,9 +140,6 @@ namespace GDC
 
             ofs << endl;
 
-            // Output {"project":"rapidjson","stars":11}
-            //std::cout << buffer.GetString() << std::endl;
-
             return 0;
         }
         catch (std::exception& e) {
