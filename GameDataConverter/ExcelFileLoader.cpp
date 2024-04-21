@@ -1,7 +1,7 @@
 #include <filesystem>
 #include "OpenXLSX.hpp"
 
-#include "Type.h"
+#include "GameDataType.h"
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"   
 

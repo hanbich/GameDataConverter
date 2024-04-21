@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include "Type.h"
+#include "GameDataType.h"
 #include "DataCoordinator.h"
 #include "ExcelFileLoader.h"
 #include "JsonFileWriter.h"

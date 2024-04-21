@@ -2,7 +2,7 @@
 //
 #include <fstream>
 
-#include "type.h"
+#include "GameDataType.h"
 
 #include "GameDataTable_generated.h"
 

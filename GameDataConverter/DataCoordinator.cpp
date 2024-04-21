@@ -1,4 +1,4 @@
-#include "Type.h"
+#include "GameDataType.h"
 
 #include "DataCoordinator.h"
 

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <format>
 
-#include "Type.h"
+#include "GameDataType.h"
 
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"
@@ -296,7 +296,7 @@ namespace GDC
 		AddLine("#include <iostream>");
 		AddLine("#include <fstream>");
 		AddLine("");
-		AddLine("#include \"Type.h\"");
+		AddLine("#include \"GameDataType.h\"");
 		AddLine("");
 		AddLine("#include \"GameDataUtil.h\"");
 		AddLine(std::format("#include \"{}\"", _headerFileName));

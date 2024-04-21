@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Type.h">
+    <ClInclude Include="GameDataType.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">

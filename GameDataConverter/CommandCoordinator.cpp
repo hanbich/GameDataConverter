@@ -1,4 +1,4 @@
-#include "Type.h" 
+#include "GameDataType.h" 
 #include "CommandCoordinator.h"
 
 //#define __FUNCTION_POINTER_SAMPLE__

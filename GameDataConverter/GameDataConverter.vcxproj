@@ -152,7 +152,7 @@
     <ClInclude Include="JsonFileWriter.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="CodeGenerator.h" />
-    <ClInclude Include="Type.h" />
+    <ClInclude Include="GameDataType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

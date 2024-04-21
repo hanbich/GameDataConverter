@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Type.h"
+#include "GameDataType.h"
 
 #include "GameDataUtil.h"
 #include "GameDataTable_generated.h"

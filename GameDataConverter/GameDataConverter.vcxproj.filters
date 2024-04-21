@@ -57,7 +57,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>6.Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Type.h">
+    <ClInclude Include="GameDataType.h">
       <Filter>6.Utility</Filter>
     </ClInclude>
     <ClInclude Include="ExcelFileLoader.h">

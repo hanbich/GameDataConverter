@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Type.h" 
+#include "GameDataType.h" 
 
 #include "GameDataUtil.h"
 

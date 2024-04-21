@@ -4,7 +4,7 @@
 
 #include "rapidjson/prettywriter.h"
 
-#include "Type.h"
+#include "GameDataType.h"
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"
 
