@@ -18,17 +18,14 @@
     <ClCompile Include="GameDataLoadTest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameDataTable.cpp">
+    <ClCompile Include="GameDataUtil.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameDataUtil.cpp">
+    <ClCompile Include="GameDataTable_generated.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameDataTable.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Type.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -37,6 +34,9 @@
     </ClInclude>
     <ClInclude Include="GameDataUtil.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDataTable_generated.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

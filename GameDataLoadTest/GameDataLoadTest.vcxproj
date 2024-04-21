@@ -136,11 +136,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameDataLoadTest.cpp" />
-    <ClCompile Include="GameDataTable.cpp" />
+    <ClCompile Include="GameDataTable_generated.cpp" />
     <ClCompile Include="GameDataUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameDataTable.h" />
+    <ClInclude Include="GameDataTable_generated.h" />
     <ClInclude Include="GameDataUtil.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Type.h" />

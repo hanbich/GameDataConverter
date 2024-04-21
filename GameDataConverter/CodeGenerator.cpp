@@ -101,6 +101,7 @@ namespace GDC
 	{
 		tstring tmpFileName = inFileName;
 		transform(tmpFileName.begin(), tmpFileName.end(), tmpFileName.begin(), ::toupper);
+		tmpFileName[inFileName.size()-2] = '_';
 
 		_defFileName = std::format("__GDC_{}__", tmpFileName);
 	}
@@ -198,7 +199,7 @@ namespace GDC
 		{
 			transform(defaultVal.begin(), defaultVal.end(), defaultVal.begin(), ::tolower);
 		}
-		else if ((valType == "float") || (valType == "double"))
+		else if (valType == "float")
 		{
 			defaultVal = std::format("{}f", defaultVal);
 		}
@@ -239,7 +240,7 @@ namespace GDC
 		{
 			RawClassMemberStream(columnData, tabCount + 1);
 		}
-		AddLine("}", tabCount);
+		AddLine("};", tabCount);
 		AddLine("");
 	}
 
@@ -256,7 +257,7 @@ namespace GDC
 		AddLine(std::format("~{}() = default;", tableClassName), tabCount + 1);
 		AddLine("");
 		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
-		AddLine("}", tabCount);
+		AddLine("};", tabCount);
 		AddLine("");
 	}
 #pragma endregion // HeaderFileGenerator
