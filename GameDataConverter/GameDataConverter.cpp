@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "GameDataType.h"
+#include "Singleton.h"
 #include "ConfigJsonParser.h"
 #include "CommandCoordinator.h"
 

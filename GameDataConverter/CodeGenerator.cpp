@@ -3,12 +3,13 @@
 #include <format>
 
 #include "GameDataType.h"
-
+#include "Singleton.h"
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"
 #include "CodeGenerator.h"
 
 using namespace std;
+using namespace GDC;
 using namespace rapidjson;
 
 namespace GDC
@@ -297,8 +298,13 @@ namespace GDC
 		AddLine("");
 		AddLine("#include <iostream>");
 		AddLine("#include <fstream>");
+		AddLine("#include <string>");
+		AddLine("#include <map>");
 		AddLine("");
-		AddLine("#include \"GameDataType.h\"");
+		AddLine("#include \"rapidjson/document.h\"");
+		AddLine("#include \"rapidjson/writer.h\"");
+		AddLine("#include \"rapidjson/stringbuffer.h\"");
+		AddLine("#include \"rapidjson/filereadstream.h\"");
 		AddLine("");
 		AddLine("#include \"GameDataUtil.h\"");
 		AddLine(format("#include \"{}\"", _headerFileName));

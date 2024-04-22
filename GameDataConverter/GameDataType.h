@@ -19,7 +19,7 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/filereadstream.h"
 
-#include "Singleton.h"
+//#include "Singleton.h"
 
 typedef char	i8;
 typedef short	i16;
@@ -37,7 +37,7 @@ typedef std::vector<i32> I32Vec;
 typedef std::vector<i8>  I8Vec;
 typedef std::vector<tstring> tstrVec;
 
-using namespace GDC;
+//using namespace GDC;
 
 #define _LOG_FUNCTION_START   std::cout << __FUNCTION__ << " CodeLine : " << __LINE__ << " - START\n"
 #define _LOG_FUNCTION_END	  std::cout << __FUNCTION__ << " CodeLine : " << __LINE__ << " - E N D\n"

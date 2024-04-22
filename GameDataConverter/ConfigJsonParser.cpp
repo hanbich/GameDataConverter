@@ -2,10 +2,11 @@
 #include <fstream>
 
 #include "GameDataType.h" 
-
+#include "Singleton.h"
 #include "ConfigJsonParser.h"
 
 using namespace std;
+using namespace GDC;
 using namespace rapidjson;
 
 namespace GDC

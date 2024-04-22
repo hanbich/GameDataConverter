@@ -1,9 +1,16 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <algorithm>
 
-#include "GameDataType.h" 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/filereadstream.h"
 
 #include "GameDataUtil.h"
+
+#define _GDC_ASSERT(Message) std::cout << "Assert - Function : " << __FUNCTION__ << " - Message : " << Message << "\n"; assert(false)
 
 using namespace std;
 using namespace rapidjson;
@@ -11,16 +18,16 @@ using namespace rapidjson;
 namespace GDC
 {
 #pragma region GameDataUtil
-	std::string GameDataUtil::ToLower(const std::string inValue)
+	string GameDataUtil::ToLower(const string inValue)
 	{
-		std::string str = inValue;
-		std::transform(str.begin(), str.end(), str.begin(), tolower);
+		string str = inValue;
+		transform(str.begin(), str.end(), str.begin(), tolower);
 		return str;
 	}
 
-	bool GameDataUtil::AtoBool(const std::string inValue)
+	bool GameDataUtil::AtoBool(const string inValue)
 	{
-		std::string&& str = ToLower(inValue);
+		string&& str = ToLower(inValue);
 		if (str == "true")
 			return true;
 		else if (str == "false")
@@ -121,8 +128,8 @@ namespace GDC
 		if (inValue.IsNull())
 			return inDefalutVal;
 
-		std::string str = inValue.GetString();
-		long long val = std::stoll(inValue.GetString());
+		string str = inValue.GetString();
+		long long val = stoll(inValue.GetString());
 		if ((val > UINT_MAX) || (val < 0))
 		{
 			_GDC_ASSERT("Invalid unsigned Value");

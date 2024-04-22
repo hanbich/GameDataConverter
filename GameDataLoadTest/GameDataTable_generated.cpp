@@ -3,8 +3,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <map>
 
-#include "GameDataType.h"
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/filereadstream.h"
 
 #include "GameDataUtil.h"
 #include "GameDataTable_generated.h"

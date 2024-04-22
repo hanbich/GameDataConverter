@@ -5,13 +5,15 @@
 #include "rapidjson/prettywriter.h"
 
 #include "GameDataType.h"
+#include "Singleton.h"
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"
 
 #include "JsonFileWriter.h"
 
-using namespace rapidjson;
 using namespace std;
+using namespace GDC;
+using namespace rapidjson;
 
 namespace GDC
 {

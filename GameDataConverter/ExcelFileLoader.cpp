@@ -2,12 +2,14 @@
 #include "OpenXLSX.hpp"
 
 #include "GameDataType.h"
+#include "Singleton.h"
 #include "ConfigJsonParser.h"
 #include "DataCoordinator.h"   
 
 #include "ExcelFileLoader.h"
 
 using namespace std;
+using namespace GDC;
 using namespace OpenXLSX;
 
 namespace fs = std::filesystem;

@@ -62,42 +62,58 @@
   2. 프로젝트에 GameDataType.h, GameDataUtil.h/.cpp 추가
   3. 프로젝트에 GameDataTable_generated.h/.cpp 추가
   4. 샘플 코드
+
 ``` cpp
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <map>
 
-#include "GameDataType.h"
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/filereadstream.h"
+
 #include "GameDataTable_generated.h"
 
 using namespace rapidjson;
 using namespace std;
-```
-``` cpp
-try {
-    const string fullPath = "D:\\Work\\GameDataConverter\\OutGameDataFiles\\GameData.json";
-    ifstream ifs(fullPath);
-    if (!ifs.is_open()) {
-        throw runtime_error("failed to open the file");
-    }
+using namespace GDC;
 
-    // 파일 내용을 문자열로 읽기
-    string json((istreambuf_iterator<char>(ifs)), (istreambuf_iterator<char>()));
+int main()
+{
+    try {
+        const string fullPath = "D:\\Work\\GameDataConverter\\OutGameDataFiles\\GameData.json";
+        ifstream ifs(fullPath);
+        if (!ifs.is_open()) {
+            throw runtime_error("failed to open the file");
+        }
 
-    // JSON 문자열 파싱
-    Document doc;
-    doc.Parse(json.c_str());
+        // 파일 내용을 문자열로 읽기
+        string json((istreambuf_iterator<char>(ifs)), (istreambuf_iterator<char>()));
 
-    // 데이터 테이블 로드 및 출력
-    BaseType_Table baseTypeTable;
-    baseTypeTable.Initialize(doc["BaseType"]);
-    baseTypeTable.WriteLog();
+        // JSON 문자열 파싱
+        Document doc;
+        doc.Parse(json.c_str());
 
-    BaseType_temp_Table baseTypeTempTable;
-    baseTypeTempTable.Initialize(doc["BaseType_temp"]);
-    baseTypeTempTable.WriteLog();
-}
-catch (const exception& e) {
-    _GDC_ASSERT(e.what());
-    return -1;
+        {
+            // 데이터 테이블 로드 및 출력
+            BaseType_Table baseTypeTable;
+            baseTypeTable.Initialize(doc["BaseType"]);
+            baseTypeTable.WriteLog();
+
+            BaseType_temp_Table baseTypeTempTable;
+            baseTypeTempTable.Initialize(doc["BaseType_temp"]);
+            baseTypeTempTable.WriteLog();
+        }
+	}
+    catch (const exception& e) {
+        cout << "Assert - Message : " << e.what() << "\n";
+        assert(false);
+		return -1;
+	}
+
+    return 0;
 }
 ```
 

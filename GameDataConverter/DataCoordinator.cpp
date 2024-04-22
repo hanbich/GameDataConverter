@@ -3,6 +3,7 @@
 #include "DataCoordinator.h"
 
 using namespace std;
+using namespace GDC;
 
 namespace GDC
 {

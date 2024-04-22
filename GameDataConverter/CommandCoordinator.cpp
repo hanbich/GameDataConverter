@@ -1,6 +1,7 @@
 #include <format>
 
 #include "GameDataType.h" 
+#include "Singleton.h"
 #include "DataCoordinator.h"
 #include "ExcelFileLoader.h"
 #include "JsonFileWriter.h"
@@ -10,6 +11,7 @@
 
 //#define __FUNCTION_POINTER_SAMPLE__
 using namespace std;
+using namespace GDC;
 
 namespace GDC
 {
