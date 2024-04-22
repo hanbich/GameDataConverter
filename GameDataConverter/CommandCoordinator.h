@@ -18,10 +18,8 @@ namespace GDC
 		static bool GenerateSrcOnly();
 	};
 
-	class CommandCoordinator : public Singleton<CommandCoordinator>
+	class CommandCoordinator
 	{
-		friend class Singleton;
-
 		// every function pointer will be stored as this type
 		typedef void (*voidFunctionType)(void);
 		typedef std::map<tstring, std::pair<voidFunctionType, std::type_index>> CommandFunctionMap;
