@@ -257,6 +257,8 @@ namespace GDC
 		AddLine("public:", tabCount);
 		AddLine(format("{}() : TableBase(\"{}\")", tableClassName, inTableName) + "{}", tabCount + 1);
 		AddLine(format("~{}() = default;", tableClassName), tabCount + 1);
+		AddLine(format("{}({} const&) = delete;", tableClassName, tableClassName), tabCount + 1);
+		AddLine(format("void operator=({} const&) = delete;", tableClassName), tabCount + 1);
 		AddLine("");
 		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
 		AddLine("};", tabCount);

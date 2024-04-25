@@ -18,6 +18,9 @@ namespace GDC
 		ConfigJsonParser();
 		~ConfigJsonParser(){}
 
+		ConfigJsonParser(ConfigJsonParser const&) = delete;		// 복사 생성자 삭제
+		void operator=(ConfigJsonParser const&) = delete;	// 대입 연산자 삭제
+
 		int LoadFile(std::string inPath);
 
 		const std::string& GetLoadPath() const { return _loadPath; }

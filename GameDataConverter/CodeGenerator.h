@@ -20,6 +20,9 @@ namespace GDC
 		CodeGenerator(const tstring& inFileName);
 		virtual ~CodeGenerator();
 
+		CodeGenerator(CodeGenerator const&) = delete;	// 복사 생성자 삭제
+		void operator=(CodeGenerator const&) = delete;	// 대입 연산자 삭제
+
 		virtual void Generate(const DataCoordinator& inDataCoordinator) = 0;
 
 		tstring GetFileName() const { return _fileName; }
@@ -51,6 +54,9 @@ namespace GDC
 		HeaderFileGenerator(const tstring& inFileName);
 		virtual ~HeaderFileGenerator();
 
+		HeaderFileGenerator(HeaderFileGenerator const&) = delete;	// 복사 생성자 삭제
+		void operator=(HeaderFileGenerator const&) = delete;	// 대입 연산자 삭제
+
 		virtual void Generate(const DataCoordinator& inDataCoordinator) override;
 
 	private:
@@ -74,6 +80,9 @@ namespace GDC
 	public:
 		SourceFileGenerator(const tstring& inFileName);
 		virtual ~SourceFileGenerator();
+
+		SourceFileGenerator(SourceFileGenerator const&) = delete;	// 복사 생성자 삭제
+		void operator=(SourceFileGenerator const&) = delete;	// 대입 연산자 삭제
 
 		virtual void Generate(const DataCoordinator& inDataCoordinator) override;
 

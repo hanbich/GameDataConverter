@@ -18,6 +18,9 @@ namespace GDC
         ExcelFileLoader() = default;
         ~ExcelFileLoader() = default;
 
+        ExcelFileLoader(ExcelFileLoader const&) = delete;	// 복사 생성자 삭제
+        void operator=(ExcelFileLoader const&) = delete;	// 대입 연산자 삭제
+
         static int LoadFile(const tstring& inFileName, TableDataPtr outTableDataPtr);
         static int LoadFiles(DataCoordinator& outDataCoordinator);
     };

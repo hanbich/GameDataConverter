@@ -28,6 +28,9 @@ namespace GDC
 		CommandCoordinator();
 		~CommandCoordinator();
 
+		CommandCoordinator(CommandCoordinator const&) = delete;	// 복사 생성자 삭제
+		void operator=(CommandCoordinator const&) = delete;	// 대입 연산자 삭제
+
 		bool InputCommand(const tstring& inCommand);
 
 	private:

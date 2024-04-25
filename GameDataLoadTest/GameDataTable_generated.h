@@ -82,6 +82,8 @@ namespace GDC
     public:
         BaseType_Table() : TableBase("BaseType"){}
         ~BaseType_Table() = default;
+        BaseType_Table(BaseType_Table const&) = delete;
+        void operator=(BaseType_Table const&) = delete;
 
         virtual void Initialize(const rapidjson::Value& inValue);
     };
@@ -121,6 +123,8 @@ namespace GDC
     public:
         BaseType_temp_Table() : TableBase("BaseType_temp"){}
         ~BaseType_temp_Table() = default;
+        BaseType_temp_Table(BaseType_temp_Table const&) = delete;
+        void operator=(BaseType_temp_Table const&) = delete;
 
         virtual void Initialize(const rapidjson::Value& inValue);
     };

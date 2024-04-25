@@ -17,6 +17,9 @@ namespace GDC
         JsonFileWriter() {}
         ~JsonFileWriter() {}
 
+        JsonFileWriter(JsonFileWriter const&) = delete;	// 복사 생성자 삭제
+        void operator=(JsonFileWriter const&) = delete;	// 대입 연산자 삭제
+
         //int LoadFile();
         int WriteFile(DataCoordinator& refDataCoordinator);
     };

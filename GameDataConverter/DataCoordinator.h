@@ -54,6 +54,9 @@ namespace GDC
 		DataCoordinator() = default;
 		~DataCoordinator() = default;
 
+		DataCoordinator(DataCoordinator const&) = delete;	// 복사 생성자 삭제
+		void operator=(DataCoordinator const&) = delete;	// 대입 연산자 삭제
+
 		TableDataPtr AddTableData(const tstring& inName);
 
 		const TableDataPtrMap& GetTableDataPtrMap() const { return _tableDataPtrMap; }
