@@ -54,8 +54,8 @@ namespace GDC
         ~row_BaseType() = default;
 
     public:
-        virtual void Initialize(const rapidjson::Value& inValue);
-        virtual void WriteLog() const;
+        virtual void Initialize(const rapidjson::Value& inValue) override;
+        virtual void WriteLog() const override;
 
     public:
         int _ID = 0;
@@ -85,7 +85,7 @@ namespace GDC
         BaseType_Table(BaseType_Table const&) = delete;
         void operator=(BaseType_Table const&) = delete;
 
-        virtual void Initialize(const rapidjson::Value& inValue);
+        virtual void Initialize(const rapidjson::Value& inValue) override;
     };
 
     class row_BaseType_temp : public row_TableBase
@@ -95,8 +95,8 @@ namespace GDC
         ~row_BaseType_temp() = default;
 
     public:
-        virtual void Initialize(const rapidjson::Value& inValue);
-        virtual void WriteLog() const;
+        virtual void Initialize(const rapidjson::Value& inValue) override;
+        virtual void WriteLog() const override;
 
     public:
         int _ID = 0;
@@ -126,7 +126,7 @@ namespace GDC
         BaseType_temp_Table(BaseType_temp_Table const&) = delete;
         void operator=(BaseType_temp_Table const&) = delete;
 
-        virtual void Initialize(const rapidjson::Value& inValue);
+        virtual void Initialize(const rapidjson::Value& inValue) override;
     };
 
 }

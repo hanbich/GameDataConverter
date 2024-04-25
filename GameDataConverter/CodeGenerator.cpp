@@ -234,8 +234,8 @@ namespace GDC
 		AddLine(format("~{}() = default;", rowClassName), tabCount + 1);
 		AddLine("");
 		AddLine("public:", tabCount);
-		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
-		AddLine("virtual void WriteLog() const;", tabCount + 1);
+		AddLine("virtual void Initialize(const rapidjson::Value& inValue) override;", tabCount + 1);
+		AddLine("virtual void WriteLog() const override;", tabCount + 1);
 		AddLine("");
 		AddLine("public:", tabCount);
 		for (const auto& columnData : inTableDataPtr->GetColumnInfoVec())
@@ -260,7 +260,7 @@ namespace GDC
 		AddLine(format("{}({} const&) = delete;", tableClassName, tableClassName), tabCount + 1);
 		AddLine(format("void operator=({} const&) = delete;", tableClassName), tabCount + 1);
 		AddLine("");
-		AddLine("virtual void Initialize(const rapidjson::Value& inValue);", tabCount + 1);
+		AddLine("virtual void Initialize(const rapidjson::Value& inValue) override;", tabCount + 1);
 		AddLine("};", tabCount);
 		AddLine("");
 	}
