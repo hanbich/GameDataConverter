@@ -61,8 +61,14 @@ namespace GDC
 		DataCoordinator dataCoordinator;
 		JsonFileWriter jsonFileWriter;
 
-		ExcelFileLoader::LoadFiles(dataCoordinator);
-		jsonFileWriter.WriteFile(dataCoordinator);
+		// 코드 생성
+		const tstring& srcFileName = ConfigJsonParser::Get()->GetWriteSrcFileName();
+
+		HeaderFileGenerator hfGenerator(srcFileName);
+		hfGenerator.Generate(dataCoordinator);
+
+		SourceFileGenerator sfGenerator(srcFileName);
+		sfGenerator.Generate(dataCoordinator);
 
 		_LOG_FUNCTION_END;
 
